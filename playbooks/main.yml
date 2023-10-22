@@ -20,10 +20,33 @@
     when: ansible_os_family == 'Debian'
 
   tasks:
-  - name: trigger initial update_cache
+  - name: trigger initial system wide update (Debian)
     apt:
       upgrade: yes
-      
+    when: ansible_os_family == 'Debian'
+  
+  - name: trigger initial system wide update (CentOS 7)
+    yum:
+      name: '*'
+      state: latest
+    when: ansible_os_family == 'CentOS' and ansible_facts['distribution_major_version'] == "7"
+
+  - name: trigger initial system wide update (CentOS 8+)
+    dnf:
+      name: '*'
+      state: latest
+    when: ansible_os_family == 'CentOS' and ansible_facts['distribution_major_version'] >= "8"  
+
   - name: Set timezone
     community.general.timezone:
       name: Asia/Barnaul
+  - name: Install required package
+    package:
+      name:
+      - net-tools
+      - curl
+      - wget
+      - nano
+      - vim
+      - bmon
+      state: present
