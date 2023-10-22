@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: true
 
   vars_files:
     - vars/vars.yml
@@ -7,11 +8,12 @@
 
   pre_tasks:
   - name: Update apt cache if needed.
-    become: true
-    apt: update_cache=yes cache_valid_time=3600
+    apt:
+      update_cache: yes
+      cache_valid_time: 3600
     when: ansible_os_family == 'Debian'
 
   tasks:
-  - name: Import Sudo Password as Fact
-    ansible.builtin.set_fact:
-      ansible_become_pass: "{{ sudo_passwords[inventory_hostname] }}"
+  - name: Set timezone
+    community.general.timezone:
+      name: Asia/Barnaul
