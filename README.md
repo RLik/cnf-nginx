@@ -1,6 +1,7 @@
 # CNF nginx
-
-
+sudo su - gitlab-runner
+ssh-keygen. если ключей нет
+ssh-copy-id roman@10.10.10.37
 
 ## Getting started
 
