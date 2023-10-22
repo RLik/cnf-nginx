@@ -3,4 +3,4 @@ Nginx config:
     - main
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
-    - ansible-playbook -i inventory/inv.ini --vault-password-file .vault_password.txt playbooks/mail.yml
+    - ansible-playbook -i inventory/inv.ini --vault-password-file .vault_password.txt playbooks/main.yml
