@@ -6,6 +6,12 @@
     - vars/vars.yml
     - /etc/ansible/vault/nginx.yml
 
+  handlers:
+  - name: reload Nginx
+    service:
+      name: Nginx
+      state: reload
+
   pre_tasks:
   - name: Update apt cache if needed.
     apt:
@@ -14,6 +20,10 @@
     when: ansible_os_family == 'Debian'
 
   tasks:
+  - name: trigger initial update_cache
+    apt:
+      upgrade: yes
+      
   - name: Set timezone
     community.general.timezone:
       name: Asia/Barnaul
