@@ -1,6 +1,6 @@
 Nginx config:
   only:
-    - master
+    - main
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
     - ansible-playbook -i inventory/inv.ini --vault-password-file .vault_password.txt
