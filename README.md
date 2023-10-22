@@ -2,6 +2,10 @@
 sudo su - gitlab-runner
 ssh-keygen. если ключей нет
 ssh-copy-id roman@10.10.10.37
+sudo nano /etc/ansible/vault/nginx.yml
+sudo ansible-vault encrypt /etc/ansible/vault/nginx.yml
+sudo chown root:gitlab-runner /etc/ansible/vault/nginx.yml
+sudo chmod 640 /etc/ansible/vault/nginx.yml
 
 ## Getting started
 
