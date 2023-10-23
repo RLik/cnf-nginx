@@ -51,6 +51,7 @@
       - vim
       - mc
       state: present
+      
   - name: Install bmon (for Ubuntu/Debian)
     package:
       name:
