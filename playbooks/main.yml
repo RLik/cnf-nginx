@@ -40,6 +40,7 @@
   - name: Set timezone
     community.general.timezone:
       name: Asia/Barnaul
+      
   - name: Install required package
     package:
       name:
@@ -49,4 +50,5 @@
       - nano
       - vim
       - bmon
+      - mc
       state: present
