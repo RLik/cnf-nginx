@@ -51,10 +51,17 @@
       - vim
       - mc
       state: present
-      
+
   - name: Install bmon (for Ubuntu/Debian)
     package:
       name:
       - bmon
       state: present
     when: ansible_os_family == 'Debian'
+
+  - name: Disable password authentication for root
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      state: present
+      regexp: '^#?PermitRootLogin'
+      line: 'PermitRootLogin prohibit-password'
