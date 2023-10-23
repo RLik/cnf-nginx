@@ -29,13 +29,13 @@
     yum:
       name: '*'
       state: latest
-    when: ansible_os_family == 'CentOS' and ansible_facts['distribution_major_version'] == "7"
+    when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "7"
 
   - name: trigger initial system wide update (CentOS 8+)
     dnf:
       name: '*'
       state: latest
-    when: ansible_os_family == 'CentOS' and ansible_facts['distribution_major_version'] >= "8"  
+    when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] >= "8"  
 
   - name: Set timezone
     community.general.timezone:
@@ -49,6 +49,11 @@
       - wget
       - nano
       - vim
-      - bmon
       - mc
       state: present
+  - name: Install bmon (for Ubuntu/Debian)
+    package:
+      name:
+      - bmon
+      state: present
+      when: ansible_os_family == 'Debian'
