@@ -133,7 +133,7 @@
 
   - name: Create local configuration fail for fail2ban
     copy:
-      src: files/jail.conf
+      src: ../files/jail.conf
       dest: /etc/fail2ban/jail.local
   
   - name: Restart fail2ban.
