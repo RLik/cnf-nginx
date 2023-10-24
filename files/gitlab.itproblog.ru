@@ -10,7 +10,7 @@ server {
   listen 443 ssl default_server;
 
   # enables SSLv3/TLSv1, but not SSLv2 which is weak and should no longer be used.
-  ssl_protocols SSLv3 TLSv1;
+  # ssl_protocols SSLv3 TLSv1;
   
   # disables all weak ciphers
   ssl_ciphers ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM;
@@ -26,7 +26,6 @@ server {
 
   ## See the keepalive_timeout directive in nginx.conf.
   ## Server certificate and key.
-  ssl on;
   include conf.d/nginx_ssl.conf;
   ssl_session_timeout  5m;
 
