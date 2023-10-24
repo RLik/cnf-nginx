@@ -145,7 +145,7 @@
     package:
       name:
       - nginx
-    state: present
+      state: present
 
   - name: Enable and start nginx
     service:
