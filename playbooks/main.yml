@@ -171,19 +171,19 @@
     template:
       src: ../files/nginx_ssl.conf.j2
       dest: /etc/nginx/conf.d/nginx_ssl.conf
+  
+  - name: Create directory fon nginx on CentOS
+    file:
+      path: "{{ item }}"
+      state: directory
+    with_items:
+      - /etc/nginx/sites-available
+      - /etc/nginx/sites-enabled
 
   - name: Copy nginx config file
     copy:
       src: ../files/gitlab.itproblog.ru
       dest: /etc/nginx/sites-available/gitlab.itproblog.ru
-  
-  - name: Create directory fon nginx on CentOS
-    file:
-      src: "{{ item }}"
-      state: directory
-    with_items:
-      - /etc/nginx/sites-available
-      - /etc/nginx/sites-enabled
 
   - name: Enable nginx new site (Debian)
     file:
@@ -195,4 +195,3 @@
     service:
       name: nginx
       state: reloaded
-
