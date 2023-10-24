@@ -140,3 +140,8 @@
     service:
       name: fail2ban
       state: restarted
+
+  - name: Install Nginx
+    package:
+      - nginx
+    state: present
