@@ -143,5 +143,26 @@
 
   - name: Install Nginx
     package:
+      name:
       - nginx
     state: present
+
+  - name: Enable and start nginx
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+  
+  - name: Create directory for ssl certs
+    file:
+      path: /etc/nginx/ssl
+      state: directory
+  
+  - name: Copy certificate and key ../files/jail.conf
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    with_items:
+      - { src: '/etc/ansible/config/ssl/itproblog.ru.key', dest: '/etc/nginx/ssl/itproblog.ru.key' }
+      - { src: '/etc/ansible/config/ssl/itproblog.ru.crt', dest: '/etc/nginx/ssl/itproblog.ru.crt' }
+
