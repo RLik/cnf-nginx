@@ -98,7 +98,7 @@
   - name: Configure firewall (CentOS)
     firewalld:
       state: "{{ item.state }}"
-      port: "{{ ite.port }}"
+      port: "{{ item.port }}"
       zone: public
       immediate: yes
       permanent: yes
