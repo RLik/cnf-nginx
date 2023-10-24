@@ -172,3 +172,19 @@
       src: ../files/nginx_ssl.conf.j2
       dest: /etc/nginx/conf.d/nginx_ssl.conf
 
+  - name: Copy nginx config file
+    copy:
+      src: ../files/gitlab.itproblog.ru
+      dest: /etc/nginx/sites-available/gitlab.itproblog.ru
+
+  - name: Enable nginx new site
+    file:
+      src: /etc/nginx/sites-available/gitlab.itproblog.ru
+      dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
+      state: link
+
+  - name: Reload nginx
+    service:
+      name: nginx
+      state: reload
+
