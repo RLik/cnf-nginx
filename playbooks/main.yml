@@ -162,7 +162,13 @@
     copy:
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
+      force: true
     with_items:
-      - { src: '/etc/ansible/config/ssl/itproblog.ru.key', dest: '/etc/nginx/ssl/itproblog.ru.key' }
-      - { src: '/etc/ansible/config/ssl/itproblog.ru.crt', dest: '/etc/nginx/ssl/itproblog.ru.crt' }
+      - { src: '/etc/ansible/config/ssl/itproblog.ru.key', dest: "{{ ssl_certificate_path }}" }
+      - { src: '/etc/ansible/config/ssl/itproblog.ru.crt', dest: "{{ ssl_certificate_key_path }}" }
+      
+  - name: Copy config file with certificate path declaration
+    template:
+      src: ../files/nginx_ssl.conf.j2
+      dest: /etc/nginx/conf.d/nginx_ssl.conf
 

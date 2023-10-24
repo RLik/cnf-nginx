@@ -5,12 +5,16 @@ ssh-copy-id roman@10.10.10.37
 sudo nano /etc/ansible/vault/nginx.yml
 sudo ansible-vault encrypt /etc/ansible/vault/nginx.yml
 sudo chown root:gitlab-runner /etc/ansible/vault/nginx.yml
-sudo chmod 640 /etc/ansible/vault/nginx.yml
-mkdir -p /etc/ansible/config/ssl
+sudo chmod 650 /etc/ansible/vault/nginx.yml
+chmod 641 /etc/ansible/vault/
+sudo mkdir -p /etc/ansible/config/ssl
 nano /etc/ansible/config/ssl/itproblog.ru.key
 nano /etc/ansible/config/ssl/itproblog.ru.crt
 sudo chmod -R 440 /etc/ansible/config/
 sudo chown root:gitlab-runner -R /etc/ansible/config/
+sudo chmod 650 /etc/ansible/config/
+sudo chmod 650 /etc/ansible/config/ssl/
+
 
 ## Getting started
 
