@@ -1,2 +1,2 @@
-ssl_certificate_path: "{{ ssl_certificate_path }}"
-ssl_certificate_key_path: "{{ ssl_certificate_key_path }}"
+ssl_certificate_path: '/etc/nginx/ssl/itproblog.ru.key'
+ssl_certificate_key_path: '/etc/nginx/ssl/itproblog.ru.crt'
