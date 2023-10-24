@@ -176,8 +176,16 @@
     copy:
       src: ../files/gitlab.itproblog.ru
       dest: /etc/nginx/sites-available/gitlab.itproblog.ru
+  
+  - name: Create directory fon nginx on CentOS
+    file:
+      src: "{{ item }}"
+      state: directory
+    with_items:
+      - /etc/nginx/sites-available
+      - /etc/nginx/sites-enabled
 
-  - name: Enable nginx new site
+  - name: Enable nginx new site (Debian)
     file:
       src: /etc/nginx/sites-available/gitlab.itproblog.ru
       dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
@@ -186,5 +194,5 @@
   - name: Reload nginx
     service:
       name: nginx
-      state: reload
+      state: reloaded
 
