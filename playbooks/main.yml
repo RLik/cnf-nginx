@@ -193,7 +193,7 @@
 
   - name: Add line in config file for enabled-sites
     lineinfile:
-      path: /etc/nginx/nginx/cong
+      path: /etc/nginx/nginx/.conf
       line: include /etc/nginx/sites-enabled/*.conf;
       state: present
     when: ansible_os_family == 'RedHat'
