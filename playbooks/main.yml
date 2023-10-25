@@ -191,7 +191,15 @@
       dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
       state: link
 
+  - name: Check nginx config file
+    shell: nginx -t
+    register: nginx_check
+    failed_when:
+    - '"syntax is ok" is not in nginx_check'
+    - '"test is successful" is not in nginx_check'
+
   - name: Reload nginx
     service:
       name: nginx
       state: reloaded
+    when: nginx_check.stdout 
