@@ -200,7 +200,7 @@
 
   - name: Print nginx_check
     debug:
-      msg: nginx_check.stdout
+      msg: "{{ nginx_check.stdout }}"
 
   - name: Reload nginx
     service:
