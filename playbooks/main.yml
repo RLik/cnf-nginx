@@ -194,16 +194,16 @@
   - name: Check nginx config file
     shell: nginx -t
     register: nginx_check
-    #failed_when:
-    #- '"syntax is ok" not in nginx_check.stdout'
-    #- '"test is successful" not in nginx_check.stdout'
+    changed: false
+    failed_when:
+    - '"syntax is ok" not in nginx_check.stdout'
+    - '"test is successful" not in nginx_check.stdout'
 
-  - name: Print nginx_check
-    debug:
-      msg: "{{ nginx_check.stdout }}"
+  #- name: Print nginx_check
+  #  debug:
+  #    msg: "{{ nginx_check.stdout }}"
 
   - name: Reload nginx
     service:
       name: nginx
       state: reloaded
-    when: nginx_check.stdout 
