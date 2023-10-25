@@ -33,4 +33,8 @@ server {
   ## http://www.chromium.org/sts. I've set it to 2 hours; set it to
   ## whichever age you want.
   add_header Strict-Transport-Security "max-age=7200";
+
+  location / {
+    proxy_pass https://10.10.10.36;
+  }
 }
