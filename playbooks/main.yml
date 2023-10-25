@@ -185,11 +185,18 @@
       src: ../files/gitlab.itproblog.ru
       dest: /etc/nginx/sites-available/gitlab.itproblog.ru
 
-  - name: Enable nginx new site (Debian)
+  - name: Enable nginx new site
     file:
       src: /etc/nginx/sites-available/gitlab.itproblog.ru
       dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
       state: link
+
+  - name: Add line in config file for enabled-sites
+    lineinfile:
+      path: /etc/nginx/nginx/cong
+      line: include /etc/nginx/sites-enabled/*.conf;
+      state: present
+    when: ansible_os_family == 'RedHat'
 
   - name: Check nginx config file
     shell: nginx -t
@@ -197,10 +204,6 @@
     failed_when:
     - '"syntax is ok" not in nginx_check.stderr'
     - '"test is successful" not in nginx_check.stderr'
-
-  #- name: Print nginx_check
-  #  debug:
-  #    msg: "{{ nginx_check.stdout }}"
 
   - name: Reload nginx
     service:
