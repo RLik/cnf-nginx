@@ -194,7 +194,6 @@
   - name: Check nginx config file
     shell: nginx -t
     register: nginx_check
-    changed: false
     failed_when:
     - '"syntax is ok" not in nginx_check.stdout'
     - '"test is successful" not in nginx_check.stdout'
