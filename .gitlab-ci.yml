@@ -1,4 +1,4 @@
-nginx config:
+nginx_config:
   only:
     - main
   script:
