@@ -41,14 +41,18 @@
 
 - name: Copy nginx config file
   copy:
-    src: gitlab.itproblog.ru
-    dest: /etc/nginx/sites-available/gitlab.itproblog.ru
+    src: "{{ item }}"
+    dest: "/etc/nginx/sites-available/{{ item }}"
+  with_items: 
+  - gitlab.itproblog.ru
 
 - name: Enable nginx new site
   file:
-    src: /etc/nginx/sites-available/gitlab.itproblog.ru
-    dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
-    state: link
+    src: "/etc/nginx/sites-available/{{ item.name }}"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: 
+  - { name: gitlab.itproblog.ru, state: link }
 
 - name: Copy config file for nginx (CentOS)
   copy:
