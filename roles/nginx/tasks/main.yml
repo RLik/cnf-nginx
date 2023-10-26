@@ -1,0 +1,73 @@
+- name: Install Nginx
+  package:
+    name:
+    - nginx
+    state: present
+
+- name: Enable and start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+
+- name: Create directory for ssl certs
+  file:
+    path: /etc/nginx/ssl
+    state: directory
+
+- name: Copy certificate and key
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    force: true
+  with_items:
+    - { src: '/etc/ansible/config/ssl/itproblog.ru.crt', dest: "{{ ssl_certificate_path }}" }
+    - { src: '/etc/ansible/config/ssl/itproblog.ru.key', dest: "{{ ssl_certificate_key_path }}" }
+
+- name: Copy config file with certificate path declaration
+  template:
+    src: files/nginx/nginx_ssl.conf.j2
+    dest: /etc/nginx/conf.d/nginx_ssl.conf
+
+- name: Create directory fon nginx on CentOS
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - /etc/nginx/sites-available
+    - /etc/nginx/sites-enabled
+
+- name: Copy nginx config file
+  copy:
+    src: files/nginx/gitlab.itproblog.ru
+    dest: /etc/nginx/sites-available/gitlab.itproblog.ru
+
+- name: Enable nginx new site
+  file:
+    src: /etc/nginx/sites-available/gitlab.itproblog.ru
+    dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
+    state: link
+
+- name: Copy config file for nginx (CentOS)
+  copy:
+    src: files/nginx/nginx_CentOS.conf
+    dest: /etc/nginx/nginx.conf
+  when: ansible_os_family == 'RedHat'
+
+- name: Copy config file for nginx (Debian)
+  copy:
+    src: files/nginx/nginx_Debian.conf
+    dest: /etc/nginx/nginx.conf
+  when: ansible_os_family == 'Debian'
+
+- name: Check nginx config file
+  shell: nginx -t
+  register: nginx_check
+  failed_when:
+  - '"syntax is ok" not in nginx_check.stderr'
+  - '"test is successful" not in nginx_check.stderr'
+
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
