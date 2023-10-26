@@ -12,12 +12,6 @@
     - security_config
     - nginx
 
-  handlers:
-  - name: reload Nginx
-    service:
-      name: Nginx
-      state: reload
-
   pre_tasks:
   - name: Update apt cache if needed.
     apt:
