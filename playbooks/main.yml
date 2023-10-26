@@ -191,11 +191,17 @@
       dest: /etc/nginx/sites-enabled/gitlab.itproblog.ru
       state: link
 
-  - name: Add line in config file for enabled-sites
+  - name: Copy config file for nginx (CentOS)
     copy:
-      src: ../files/nginx.conf
+      src: ../files/nginx_CentOS.conf
       dest: /etc/nginx/nginx.conf
     when: ansible_os_family == 'RedHat'
+
+  - name: Copy config file for nginx (Debian)
+    copy:
+      src: ../files/nginx_Debian.conf
+      dest: /etc/nginx/nginx.conf
+    when: ansible_os_family == 'Debian'
 
   - name: Check nginx config file
     shell: nginx -t
