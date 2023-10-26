@@ -7,9 +7,9 @@ nginx_config_check:
   - changes:
     - "*.md"
     when: never
-  - when: always
-  only:
-  - main
+  - if: '$CI_COMMIT_REF_NAME == "main"'
+    when: always
+
   stage: pre_check
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
@@ -23,7 +23,9 @@ nginx_config_deploy:
   - changes:
     - "*.md"
     when: never
-  - when: always
+  - if: '$CI_COMMIT_REF_NAME == "main"'
+    when: always
+
   only:
     - main
   stage: deploy
