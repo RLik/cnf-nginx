@@ -9,6 +9,7 @@
   roles:
     - initial_setup
     - firewall_config
+    - security_config
 
   handlers:
   - name: reload Nginx
@@ -26,35 +27,6 @@
     when: ansible_os_family == 'Debian'
 
   tasks:
-  - name: Disable password authentication for root
-    lineinfile:
-      path: /etc/ssh/sshd_config
-      state: present
-      regexp: '^#?PermitRootLogin'
-      line: 'PermitRootLogin prohibit-password'
-    notify: restart ssh
-
-  - name: Install fail2ban (RedHat).
-    yum: name=fail2ban state=present enablerepo=epel
-    when: ansible_os_family == 'RedHat'
-
-  - name: Install fail2ban (Debian).
-    apt: name=fail2ban state=present
-    when: ansible_os_family == 'Debian'
-
-  - name: Ensure fail2ban is running and enabled on boot.
-    service: name=fail2ban state=started enabled=yes
-
-  - name: Create local configuration fail for fail2ban
-    copy:
-      src: files/jail.conf
-      dest: /etc/fail2ban/jail.local
-  
-  - name: Restart fail2ban.
-    service:
-      name: fail2ban
-      state: restarted
-
   - name: Install Nginx
     package:
       name:
