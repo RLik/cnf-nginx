@@ -3,14 +3,13 @@ stages:
   - "deploy"
 
 nginx_config_check:
+  stage: pre_check
   rules:
   - changes:
     - "*.md"
     when: never
   - if: '$CI_COMMIT_REF_NAME == "main"'
     when: always
-
-  stage: pre_check
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
     - chmod 400 .vault_password.txt
@@ -19,16 +18,13 @@ nginx_config_check:
     - rm .vault_password.txt
 
 nginx_config_deploy:
+  stage: deploy
   rules:
   - changes:
     - "*.md"
     when: never
   - if: '$CI_COMMIT_REF_NAME == "main"'
     when: always
-
-  only:
-    - main
-  stage: deploy
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
     - chmod 400 .vault_password.txt
