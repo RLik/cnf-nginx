@@ -1,5 +1,4 @@
 ---
-
 - name: Configure firewall (Debian and Ubuntu)
   ufw:
     rule: "{{ item.rule }}"

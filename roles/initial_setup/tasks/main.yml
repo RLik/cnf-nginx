@@ -1,5 +1,4 @@
 ---
-
 - name: trigger initial system wide update (Debian)
   apt:
     upgrade: yes

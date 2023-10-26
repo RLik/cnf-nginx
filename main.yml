@@ -3,7 +3,6 @@
   become: true
 
   vars_files:
-    - vars/vars.yml
     - /etc/ansible/vault/nginx.yml
   
   roles:
