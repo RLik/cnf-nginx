@@ -157,7 +157,7 @@
 
   - name: Copy config file for nginx (CentOS)
     copy:
-      src: ..files/nginx_CentOS.conf
+      src: files/nginx_CentOS.conf
       dest: /etc/nginx/nginx.conf
     when: ansible_os_family == 'RedHat'
 
