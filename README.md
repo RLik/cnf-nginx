@@ -4,23 +4,6 @@ I use this Ansile playbookas a base to configuring nginx server out of box. Play
 
 You can freely use this solution, but without any guarantee from the author.
 
-
-
-
-
-
-sudo chown root:gitlab-runner /etc/ansible/vault/nginx.yml
-sudo chmod 650 /etc/ansible/vault/nginx.yml
-chmod 641 /etc/ansible/vault/
-sudo mkdir -p /etc/ansible/config/ssl
-nano /etc/ansible/config/ssl/itproblog.ru.key
-nano /etc/ansible/config/ssl/itproblog.ru.crt
-sudo chmod -R 440 /etc/ansible/config/
-sudo chown root:gitlab-runner -R /etc/ansible/config/
-sudo chmod 650 /etc/ansible/config/
-sudo chmod 650 /etc/ansible/config/ssl/
-
-
 ## Environment description
 
 I use GitLab CE server with local shell agent and Ansible installed. GitLab runner run under gitlab-runner user account.
@@ -54,7 +37,23 @@ ansible_sudo_pass: P@$$word
 ```
 sudo ansible-vault encrypt /etc/ansible/vault/nginx.yml
 ```
+- [ ] Give rights to read sudo password file only to root and gitlab-runner users:
+```
+sudo chown root:gitlab-runner /etc/ansible/vault/nginx.yml
+sudo chmod 640 /etc/ansible/vault/nginx.yml
+sudo chmod 650 /etc/ansible/vault/
+```
 
-## Integrate with your tools
+- [ ] In GitLab Project settings add variale named $ANSIBLE_VAULT_PASSWORD and in value part specify password that you've use to encrype nginx.yml file by Ansible Vault.
+- [ ] Create directory for storing SSL cert and keys files. Add contents of SSL crt and ke files (or just copy this files to server):
+```
+sudo mkdir -p /etc/ansible/config/ssl
+sudo nano /etc/ansible/config/ssl/itproblog.ru.key
+sudo nano /etc/ansible/config/ssl/itproblog.ru.crt
+```
 
-- [ ] [Set up project integrations](http://gitlab.itproblog.ru/Likhachev/cnf-nginx/-/settings/integrations)
+- [ ] Give rights to read SSL cert and keys files only to root and gitlab-runner users:
+```
+sudo chmod -R 650 /etc/ansible/config/
+sudo chown root:gitlab-runner -R /etc/ansible/config/
+```

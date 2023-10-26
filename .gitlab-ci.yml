@@ -3,6 +3,11 @@ stages:
   - "deploy"
 
 nginx_config_check:
+  rules:
+  - changes:
+    - "*.md"
+    when: never
+  - when: always
   only:
   - main
   stage: pre_check
@@ -14,6 +19,11 @@ nginx_config_check:
     - rm .vault_password.txt
 
 nginx_config_deploy:
+  rules:
+  - changes:
+    - "*.md"
+    when: never
+  - when: always
   only:
     - main
   stage: deploy
