@@ -17,8 +17,6 @@
     service:
       name: Nginx
       state: reload
-  - name: restart ssh
-    service: name=ssh state=restarted
 
   pre_tasks:
   - name: Update apt cache if needed.

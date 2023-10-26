@@ -27,7 +27,7 @@
 
 - name: Create local configuration jail for fail2ban
   copy:
-    src: files/security_config/jail.conf
+    src: jail.conf
     dest: /etc/fail2ban/jail.local
 
 - name: Restart fail2ban.
