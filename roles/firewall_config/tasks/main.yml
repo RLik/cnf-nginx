@@ -2,7 +2,7 @@
 - name: Configure firewall (Debian and Ubuntu)
   ufw:
     rule: allow
-    port: "{{ item.port }}"
+    port: "{{ item }}"
     proto: tcp
   with_items: "{{ allowed_tcp_ports }}"
   when: ansible_os_family == 'Debian'
