@@ -1,13 +1,10 @@
 ---
 - name: Configure firewall (Debian and Ubuntu)
   ufw:
-    rule: "{{ item.rule }}"
+    rule: allow
     port: "{{ item.port }}"
-    proto: "{{ item.proto }}"
-  with_items: 
-  - { rule: 'allow', port: 22, proto: 'tcp' }
-  - { rule: 'allow', port: 80, proto: 'tcp' }
-  - { rule: 'allow', port: 443, proto: 'tcp' }
+    proto: tcp
+  with_items: "{{ allowed_tcp_ports }}"
   when: ansible_os_family == 'Debian'
 
 - name: Configure default ufw policy
