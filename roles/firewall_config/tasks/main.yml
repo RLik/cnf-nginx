@@ -1,5 +1,5 @@
 ---
-- name: Configure firewall (Debian and Ubuntu)
+- name: Configure firewall (Debian and Ubuntu) TCP
   ufw:
     rule: allow
     port: "{{ item }}"
@@ -22,15 +22,12 @@
     state: enabled
   when: ansible_os_family == 'Ubuntu'
 
-- name: Configure firewall (CentOS)
+- name: Configure firewall (CentOS) TCP
   firewalld:
-    state: "{{ item.state }}"
-    port: "{{ item.port }}"
+    state: "{{ item }}"
+    port: tcp
     zone: public
     immediate: yes
     permanent: yes
-  with_items: 
-  - { state: 'enabled', port: '22/tcp' }
-  - { state: 'enabled', port: '80/tcp' }
-  - { state: 'enabled', port: '443/tcp' }
+  with_items: "{{ allowed_tcp_ports }}"
   when: ansible_os_family == 'RedHat'
