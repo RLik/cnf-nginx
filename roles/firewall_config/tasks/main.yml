@@ -30,4 +30,4 @@
     immediate: yes
     permanent: yes
   with_items: "{{ allowed_tcp_ports }}"
-  when: ansible_os_family == 'RedHat' allowed_tcp_ports|length > 0
+  when: ansible_os_family == 'RedHat' and allowed_tcp_ports|length > 0
