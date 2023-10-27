@@ -1,6 +1,6 @@
 # Example of configuring nginx server from box
 
-I use this Ansile playbookas a base to configuring nginx server out of box for my labs. Playbook was tested on followins OS: Ubuntu Server 22.04, CentOS7, CentOS 9 Stream.
+I use this Ansile playbookas a base to configuring nginx server out of box for my labs. Playbook was tested on followins OS: Ubuntu Server 22.04, CentOS 7, CentOS 9 Stream.
 
 You can freely use this solution, but without any guarantee from the author.
 
