@@ -5,7 +5,7 @@
     port: "{{ item }}"
     proto: tcp
   with_items: "{{ allowed_tcp_ports }}"
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and allowed_tcp_ports|length > 0
 
 - name: Configure default ufw policy
   ufw:
@@ -24,10 +24,10 @@
 
 - name: Configure firewall (CentOS) TCP
   firewalld:
-    state: "{{ item }}"
-    port: tcp
+    state: present
+    port: "{{ item }}/tcp"
     zone: public
     immediate: yes
     permanent: yes
   with_items: "{{ allowed_tcp_ports }}"
-  when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat' allowed_tcp_ports|length > 0
