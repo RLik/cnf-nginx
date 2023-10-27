@@ -24,7 +24,7 @@
 
 - name: Configure firewall (CentOS) TCP
   firewalld:
-    state: present
+    state: enabled
     port: "{{ item }}/tcp"
     zone: public
     immediate: yes
