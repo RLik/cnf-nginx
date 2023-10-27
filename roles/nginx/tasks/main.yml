@@ -42,6 +42,7 @@
   copy:
     src: "{{ item }}"
     dest: "/etc/nginx/sites-available/{{ item }}"
+    force: true
   with_items: 
   - gitlab.itproblog.ru
 
@@ -57,12 +58,14 @@
   copy:
     src: nginx_CentOS.conf
     dest: /etc/nginx/nginx.conf
+    force: true
   when: ansible_os_family == 'RedHat'
 
 - name: Copy config file for nginx (Debian)
   copy:
     src: nginx_Debian.conf
     dest: /etc/nginx/nginx.conf
+    force: true
   when: ansible_os_family == 'Debian'
 
 - name: Check nginx config file
