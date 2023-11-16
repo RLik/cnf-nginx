@@ -35,6 +35,6 @@ server {
   add_header Strict-Transport-Security "max-age=7200";
 
   location / {
-    proxy_pass https://10.10.10.36;
+    proxy_pass https://10.10.10.44;
   }
 }
