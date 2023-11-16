@@ -45,6 +45,7 @@
     force: true
   with_items: 
   - gitlab.itproblog.ru
+  - zabbix.itproblog.ru
 
 - name: Enable nginx new site
   file:
@@ -53,6 +54,7 @@
     state: "{{ item.state }}"
   with_items: 
   - { name: gitlab.itproblog.ru, state: link }
+  - { name: zabbix.itproblog.ru, state: link }
 
 - name: Copy config file for nginx (CentOS)
   copy:
