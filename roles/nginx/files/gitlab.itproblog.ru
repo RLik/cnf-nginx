@@ -7,7 +7,7 @@ server {
 }
 
 server {
-  listen 443 ssl default_server;
+  listen 443 ssl;
 
   # enables SSLv3/TLSv1, but not SSLv2 which is weak and should no longer be used.
   # ssl_protocols SSLv3 TLSv1;
