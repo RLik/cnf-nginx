@@ -1,6 +1,6 @@
 server {
   listen 80;
-  server_name gitlab.itproblog.ru;
+  server_name zabbix.itproblog.ru;
 
   # Redirect all traffic to SSL
   rewrite ^ https://$host$request_uri? permanent;
@@ -15,11 +15,11 @@ server {
   # disables all weak ciphers
   ssl_ciphers ALL:!aNULL:!ADH:!eNULL:!LOW:!EXP:RC4+RSA:+HIGH:+MEDIUM;
 
-  server_name gitlab.itproblog.ru;
+  server_name zabbix.itproblog.ru;
 
   ## Access and error logs.
-  access_log /var/log/nginx/gitlab.itproblog.ru.access.log;
-  error_log  /var/log/nginx/gitlab.itproblog.ru.error.log info;
+  access_log /var/log/nginx/zabbix.itproblog.ru.access.log;
+  error_log  /var/log/nginx/zabbix.itproblog.ru.error.log info;
 
   ## Keep alive timeout set to a greater value for SSL/TLS.
   keepalive_timeout 75 75;
