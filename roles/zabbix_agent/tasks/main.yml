@@ -44,7 +44,7 @@
    state: present
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"
 
-- name: Install Zabbix Agent 2
+- name: (Ubuntu) Install Zabbix Agent 2
   apt:
     name:
     - zabbix-agent2
@@ -52,9 +52,13 @@
     state: present
   when: ansible_os_family == 'Debian'
 
-- name: Install Zabbix Agent 2
+- name: (CetnOS 9) Install Zabbix Agent 2
   command: dnf clean all && dnf install zabbix-agent2 zabbix-agent2-plugin-*
-  when: ansible_os_family == 'RedHat'
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"
+
+- name: (CetnOS 7) Install Zabbix Agent 2
+  command: yum clean all && yum install zabbix-agent2 zabbix-agent2-plugin-*
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "7"
 
 - name: Restart and enable Zabbix Agent
   service:
