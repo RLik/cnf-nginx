@@ -48,7 +48,7 @@
     name:
     - zabbix-agent2
     - zabbix-agent2-plugin-*
-  state: present
+    state: present
 
 - name: Restart and enable Zabbix Agent
   service:
