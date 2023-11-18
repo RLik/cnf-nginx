@@ -1,6 +1,7 @@
 stages:
   - "pre_check"
   - "deploy"
+  - "deploy_zabbix_agent"
 
 nginx_config_check:
   stage: pre_check

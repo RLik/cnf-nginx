@@ -10,6 +10,7 @@
     - firewall_config
     - security_config
     - nginx
+    - zabbix_agent
 
   pre_tasks:
   - name: Update apt cache if needed.

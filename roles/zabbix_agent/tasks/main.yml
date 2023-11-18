@@ -1,0 +1,43 @@
+---
+- name: Disable Zabbix packages provided by EPEL
+  lineinfile:
+    insertafter: \\[epel\\]
+    line: excludepkgs=zabbix*
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] = "9" 
+
+- name: (Ubuntu) Download repository install package
+  get_url:
+    url: "{{ zabbix_repo_package_url_ubuntu }}"
+    dets: /tmp
+  register: source_file_ubuntu
+  when: ansible_os_family == 'Debian'
+
+- name: (Ubuntu) Install Zabbix repository package
+  apt: deb="{{ source_file_ubuntu.dest }}"
+  when: ansible_os_family == 'Debian'
+
+- name: (CentOS 7) Download repository install package
+  get_url:
+    url: "{{ zabbix_repo_package_url_centos7 }}"
+    dets: /tmp
+  register: source_file_centos7
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "7"  
+
+- name: (CentOS 7) Install Zabbix repository package
+  yum:
+   name: "{{ source_file_centos7.dest }}"
+   state: present
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "7"  
+
+- name: (CentOS 8) Download repository install package
+  get_url:
+    url: "{{ zabbix_repo_package_url_centos9 }}"
+    dets: /tmp
+  register: source_file_centos9
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"  
+
+- name: (CentOS 8) Install Zabbix repository package
+  dnf:
+   name: "{{ source_file_centos9.dest }}"
+   state: present
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"  
