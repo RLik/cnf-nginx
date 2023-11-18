@@ -42,3 +42,22 @@
    name: "{{ source_file_centos9.dest }}"
    state: present
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"
+
+- name: Install Zabbix Agent 2
+  package:
+    name:
+    - zabbix-agent2
+    - zabbix-agent2-plugin-*
+  state: present
+
+- name: Restart and enable Zabbix Agent
+  service:
+    name: zabbix-agent2
+    state: restarted
+    enabled: true
+
+- name: Add Zabbix server address to agent configuration file
+  lineinfile:
+    line: Server=10.10.10.44
+    path: /etc/zabbix/zabbix_agent2.conf
+    regexp: '^#?Server='
