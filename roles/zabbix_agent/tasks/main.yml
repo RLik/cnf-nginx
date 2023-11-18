@@ -1,7 +1,7 @@
 ---
 - name: Disable Zabbix packages provided by EPEL
   lineinfile:
-    insertafter: \\[epel\\]
+    insertafter: '\[epel\]'
     line: excludepkgs=zabbix*
     path: /etc/yum.repos.d/epel.repo
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9" 
@@ -41,4 +41,4 @@
   dnf:
    name: "{{ source_file_centos9.dest }}"
    state: present
-  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"  
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"
