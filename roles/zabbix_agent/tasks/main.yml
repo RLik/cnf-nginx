@@ -14,7 +14,8 @@
   when: ansible_os_family == 'Debian'
 
 - name: (Ubuntu) Install Zabbix repository package
-  apt: deb="{{ source_file_ubuntu.dest }}"
+  apt:
+    deb: "{{ source_file_ubuntu.dest }}"
   when: ansible_os_family == 'Debian'
 
 - name: (CentOS 7) Download repository install package
@@ -44,11 +45,16 @@
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"
 
 - name: Install Zabbix Agent 2
-  package:
+  apt:
     name:
     - zabbix-agent2
     - zabbix-agent2-plugin-*
     state: present
+  when: ansible_os_family == 'Debian'
+
+- name: Install Zabbix Agent 2
+  command: dnf clean all && dnf install zabbix-agent2 zabbix-agent2-plugin-*
+  when: ansible_os_family == 'RedHat'
 
 - name: Restart and enable Zabbix Agent
   service:
