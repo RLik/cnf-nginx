@@ -3,7 +3,7 @@
   lineinfile:
     insertafter: \\[epel\\]
     line: excludepkgs=zabbix*
-  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] = "9" 
+  when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9" 
 
 - name: (Ubuntu) Download repository install package
   get_url:
