@@ -3,12 +3,13 @@
   lineinfile:
     insertafter: \\[epel\\]
     line: excludepkgs=zabbix*
+    path: /etc/yum.repos.d/epel.repo
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9" 
 
 - name: (Ubuntu) Download repository install package
   get_url:
     url: "{{ zabbix_repo_package_url_ubuntu }}"
-    dets: /tmp
+    dest: /tmp
   register: source_file_ubuntu
   when: ansible_os_family == 'Debian'
 
@@ -19,7 +20,7 @@
 - name: (CentOS 7) Download repository install package
   get_url:
     url: "{{ zabbix_repo_package_url_centos7 }}"
-    dets: /tmp
+    dest: /tmp
   register: source_file_centos7
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "7"  
 
@@ -32,7 +33,7 @@
 - name: (CentOS 8) Download repository install package
   get_url:
     url: "{{ zabbix_repo_package_url_centos9 }}"
-    dets: /tmp
+    dest: /tmp
   register: source_file_centos9
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"  
 
