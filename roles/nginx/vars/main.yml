@@ -1,3 +1,6 @@
 ---
+# Path on nginx server to copy public key
 ssl_certificate_path: '/etc/nginx/ssl/itproblog.ru.crt'
+
+# Path on nginx server to copy private key
 ssl_certificate_key_path: '/etc/nginx/ssl/itproblog.ru.key'
