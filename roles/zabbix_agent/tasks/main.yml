@@ -44,6 +44,10 @@
    state: present
   when: ansible_facts['distribution'] == 'CentOS' and ansible_facts['distribution_major_version'] == "9"
 
+- name: Update apt repo list
+  shell: apt update
+  when: ansible_os_family == 'Debian'
+
 - name: (Ubuntu) Install Zabbix Agent 2
   apt:
     name:
