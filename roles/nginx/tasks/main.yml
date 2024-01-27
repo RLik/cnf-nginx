@@ -55,6 +55,7 @@
   with_items: 
   - { name: gitlab.itproblog.ru, state: link }
   - { name: zabbix.itproblog.ru, state: link }
+  - { name: mail.itproblog.ru, state: link }
 
 - name: Copy config file for nginx (CentOS)
   copy:
