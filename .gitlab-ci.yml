@@ -1,7 +1,6 @@
 stages:
   - "pre_check"
   - "deploy"
-  - "deploy_zabbix_agent"
 
 nginx_config_check:
   stage: pre_check
@@ -9,7 +8,7 @@ nginx_config_check:
   - changes:
     - "*.md"
     when: never
-  - if: '$CI_COMMIT_REF_NAME == "main"'
+  - if: ('$CI_COMMIT_REF_NAME == "main"') && (($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web"))
     when: always
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
@@ -24,7 +23,7 @@ nginx_config_deploy:
   - changes:
     - "*.md"
     when: never
-  - if: '$CI_COMMIT_REF_NAME == "main"'
+  - if: ('$CI_COMMIT_REF_NAME == "main"') && (($CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web"))
     when: always
   script:
     - echo $ANSIBLE_VAULT_PASSWORD > .vault_password.txt
