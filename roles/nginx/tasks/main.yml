@@ -46,6 +46,7 @@
   with_items: 
   - gitlab.itproblog.ru
   - zabbix.itproblog.ru
+  - mail.itproblog.ru
 
 - name: Enable nginx new site
   file:
