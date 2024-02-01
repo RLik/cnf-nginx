@@ -47,6 +47,7 @@
   - gitlab.itproblog.ru
   - zabbix.itproblog.ru
   - mail.itproblog.ru
+  - sso.itproblog.ru
 
 - name: Enable nginx new site
   file:
@@ -57,6 +58,7 @@
   - { name: gitlab.itproblog.ru, state: link }
   - { name: zabbix.itproblog.ru, state: link }
   - { name: mail.itproblog.ru, state: link }
+  - { name: sso.itproblog.ru, state: link }
 
 - name: Copy config file for nginx (CentOS)
   copy:
