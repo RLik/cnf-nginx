@@ -38,6 +38,7 @@
     - /etc/nginx/sites-available
     - /etc/nginx/sites-enabled
 
+<<<<<<< HEAD
 - name: Get current location
   command: pwd
   register: curr_loc
@@ -59,29 +60,40 @@
   register: sites_available_files
 
 - name: Copy nginx enabled sites file
+=======
+- name: Copy nginx config file
+>>>>>>> parent of e4dd086 (Optimazing automatization of available sites installation)
   copy:
-    src: "nginx/sites-available/{{ item }}"
+    src: "{{ item }}"
     dest: "/etc/nginx/sites-available/{{ item }}"
     force: true
-  with_items: sites_available_files.stdout_lines
+  with_items: 
+  - gitlab.itproblog.ru
+  - zabbix.itproblog.ru
+  - mail.itproblog.ru
+  - sso.itproblog.ru
 
 - name: Enable nginx new site
   file:
-    src: "/etc/nginx/sites-available/{{ item }}"
-    dest: "/etc/nginx/sites-enabled/{{ item }}"
-    state: link
-  with_items: sites_available_files.stdout_lines
+    src: "/etc/nginx/sites-available/{{ item.name }}"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}"
+    state: "{{ item.state }}"
+  with_items: 
+  - { name: gitlab.itproblog.ru, state: link }
+  - { name: zabbix.itproblog.ru, state: link }
+  - { name: mail.itproblog.ru, state: link }
+  - { name: sso.itproblog.ru, state: link }
 
 - name: Copy config file for nginx (CentOS)
   copy:
-    src: nginx/configs/nginx_CentOS.conf
+    src: nginx_CentOS.conf
     dest: /etc/nginx/nginx.conf
     force: true
   when: ansible_os_family == 'RedHat'
 
 - name: Copy config file for nginx (Debian)
   copy:
-    src: nginx/configs/nginx_Debian.conf
+    src: nginx_Debian.conf
     dest: /etc/nginx/nginx.conf
     force: true
   when: ansible_os_family == 'Debian'
