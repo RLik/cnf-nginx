@@ -38,6 +38,22 @@
     - /etc/nginx/sites-available
     - /etc/nginx/sites-enabled
 
+- name: Get current location
+  command: pwd
+  register: curr_loc
+
+- name: Get current location files
+  command: ls
+  register: curr_loc_files
+
+- name: Print current location
+  debug: 
+    msg: "{{ curr_loc }}"
+
+- name: Print current location files
+  debug:
+    msg: "{{ curr_loc_files }}"
+
 - name: Get sites-available files
   command: ls ./roles/nginx/files/nginx/sites-available
   register: sites_available_files
