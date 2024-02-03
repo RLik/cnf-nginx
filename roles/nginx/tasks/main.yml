@@ -38,38 +38,34 @@
     - /etc/nginx/sites-available
     - /etc/nginx/sites-enabled
 
-- name: Copy nginx config file
+- name: Get sites-available files
+  command: ls ./roles/nginx/files/nginx/sites-available
+  register: sites_available_files
+
+- name: Copy nginx enabled sites file
   copy:
-    src: "{{ item }}"
+    src: "nginx/sites-available/{{ item }}"
     dest: "/etc/nginx/sites-available/{{ item }}"
     force: true
-  with_items: 
-  - gitlab.itproblog.ru
-  - zabbix.itproblog.ru
-  - mail.itproblog.ru
-  - sso.itproblog.ru
+  with_items: sites_available_files.stdout_lines
 
 - name: Enable nginx new site
   file:
-    src: "/etc/nginx/sites-available/{{ item.name }}"
-    dest: "/etc/nginx/sites-enabled/{{ item.name }}"
-    state: "{{ item.state }}"
-  with_items: 
-  - { name: gitlab.itproblog.ru, state: link }
-  - { name: zabbix.itproblog.ru, state: link }
-  - { name: mail.itproblog.ru, state: link }
-  - { name: sso.itproblog.ru, state: link }
+    src: "/etc/nginx/sites-available/{{ item }}"
+    dest: "/etc/nginx/sites-enabled/{{ item }}"
+    state: link
+  with_items: sites_available_files.stdout_lines
 
 - name: Copy config file for nginx (CentOS)
   copy:
-    src: nginx_CentOS.conf
+    src: nginx/configs/nginx_CentOS.conf
     dest: /etc/nginx/nginx.conf
     force: true
   when: ansible_os_family == 'RedHat'
 
 - name: Copy config file for nginx (Debian)
   copy:
-    src: nginx_Debian.conf
+    src: nginx/configs/nginx_Debian.conf
     dest: /etc/nginx/nginx.conf
     force: true
   when: ansible_os_family == 'Debian'
